@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginBottom="40dp">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp"
+        android:drawableStart="@mipmap/voicemail"
+        android:text="  Discover products near you (in Kms"
+        tools:padding="8dp"
+        android:gravity="center_vertical"
+        />
+
+    <com.example.lenovo.renterskey.ExtraClasses.SeekbarWithIntervals
+        android:id="@+id/seekbarWithIntervals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="12dp"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp"
+        android:text="  Set a price range"
+        tools:padding="8dp"
+        android:gravity="center_vertical"
+        android:drawableStart="@mipmap/sack"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp"
+        android:text="Price"
+        tools:padding="8dp"
+        android:gravity="center_vertical"/>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:orientation="horizontal"
+           android:layout_marginTop="5dp"
+           android:layout_marginBottom="12dp"
+           android:layout_marginLeft="20dp"
+          android:background="@android:color/darker_gray"
+           android:layout_marginRight="12dp">
+
+           <EditText
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:hint=" from"
+               android:id="@+id/startingPrice_editText"
+               android:inputType="number"
+               android:background="@color/colorAccent"
+               android:layout_marginRight="1dp"/>
+
+           <EditText
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:hint=" to"
+               android:background="@color/colorAccent"
+               android:layout_marginLeft="1dp"
+               android:id="@+id/endingPrice_editText"
+               android:inputType="number"/>
+
+       </LinearLayout>
+
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+          android:layout_marginBottom="12dp"
+           android:layout_marginLeft="12dp"
+           android:layout_marginRight="12dp"
+           android:layout_marginTop="12dp"
+           android:text="  Sort by"
+            tools:padding="8dp"
+           android:gravity="center_vertical"
+           android:drawableStart="@mipmap/swap_vert"/>
+
+       <RadioGroup
+           android:layout_width="match_parent"
+           android:layout_height="80dp"
+           android:layout_marginBottom="80dp"
+           android:layout_marginLeft="12dp"
+           android:layout_marginRight="12dp"
+           android:layout_marginTop="8dp"
+           android:orientation="vertical" >
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Price Low to High"
+            android:id="@+id/radioButton_priceLowToHigh"
+            android:textColor="@android:color/black"
+            android:checked="true"
+            />
+
+         <RadioButton
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_weight="1"
+               android:text="Price High to Low"
+               android:id="@+id/radioButton_priceHighToLow"
+               android:textColor="@android:color/black"
+               android:checked="true"
+         />
+
+       </RadioGroup>
+</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

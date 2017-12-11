@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Activities.EnterDetails"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_enter_details"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                />
+
+        </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signup_view"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginBottom="40dp"
+        >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:clickable="true"
+          android:focusableInTouchMode="true"
+          >
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/EnterDetails_cardHeight"
+        android:layout_marginBottom="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginTop="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginRight="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_marginLeft="@dimen/EnterDetails_cardMarginsHorizontal"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_gravity="bottom">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/firstname"
+                android:hint="First name"
+                android:drawableLeft="@drawable/person_icon"
+                android:inputType="textPersonName"
+                android:theme="@style/TextLabel"
+                android:maxLines="1"
+                />
+
+     </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/EnterDetails_cardHeight"
+        android:layout_marginBottom="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginTop="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginRight="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_marginLeft="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+           <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+               android:id="@+id/lastname"
+                android:hint="Last name"
+                android:drawableLeft="@drawable/person_icon"
+               android:theme="@style/TextLabel"
+               android:inputType="textPersonName"
+               android:maxLines="1"
+                />
+
+     </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/EnterDetails_cardHeight"
+        android:layout_marginBottom="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginTop="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginRight="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_marginLeft="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+             <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/contact_number"
+                android:hint="Contact number"
+                android:drawableLeft="@drawable/phone_icon"
+                 android:theme="@style/TextLabel"
+                 android:inputType="number"
+                />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/EnterDetails_cardHeight"
+        android:layout_marginBottom="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginTop="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginRight="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_marginLeft="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/email"
+                android:hint="Email"
+                android:drawableLeft="@drawable/email_icon"
+                android:theme="@style/TextLabel"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                />
+
+    </android.support.v7.widget.CardView>
+
+          <android.support.v7.widget.CardView
+
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/EnterDetails_cardHeight"
+              android:layout_marginBottom="@dimen/EnterDetails_cardMarginsVertical"
+              android:layout_marginTop="@dimen/EnterDetails_cardMarginsVertical"
+              android:layout_marginRight="@dimen/EnterDetails_cardMarginsHorizontal"
+              android:layout_marginLeft="@dimen/EnterDetails_cardMarginsHorizontal"
+              android:layout_gravity="center"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+           <Spinner
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:id="@+id/statelist_spinner"
+               android:background="@color/white"
+               android:spinnerMode="dialog"
+               />
+
+          </android.support.v7.widget.CardView>
+          <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/EnterDetails_cardHeight"
+        android:layout_marginBottom="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginTop="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginRight="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_marginLeft="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+              <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+             android:id="@+id/city"
+                android:hint="City"
+                android:drawableLeft="@drawable/location_icon"
+                  android:theme="@style/TextLabel"
+                  android:inputType="textPostalAddress"
+                />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/EnterDetails_cardHeightAddress"
+        android:layout_marginBottom="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginTop="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginRight="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_marginLeft="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/addressline1"
+                android:hint="Address line one"
+                android:drawableLeft="@drawable/home_icom"
+                android:theme="@style/TextLabel"
+                android:inputType="textPostalAddress"
+                />
+
+     </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/EnterDetails_cardHeightAddress"
+        android:layout_marginBottom="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginTop="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginRight="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_marginLeft="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/home_icom"
+                android:id="@+id/addressline2"
+                android:hint="Address line two"
+                android:theme="@style/TextLabel"
+                android:inputType="textPostalAddress"
+                />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/EnterDetails_cardHeight"
+        android:layout_marginBottom="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginTop="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginRight="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_marginLeft="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/home_icom"
+                android:id="@+id/pin"
+                android:inputType="number"
+                android:theme="@style/TextLabel"
+                android:hint="Pin"
+                />
+
+     </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/EnterDetails_cardHeight"
+        android:layout_marginBottom="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginTop="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginRight="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_marginLeft="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+               android:drawableLeft="@drawable/lock_icon"
+                android:id="@+id/password"
+                android:hint="Password"
+                android:theme="@style/TextLabel"
+                android:inputType="textPassword"
+                />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/EnterDetails_cardHeight"
+        android:layout_marginBottom="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginTop="@dimen/EnterDetails_cardMarginsVertical"
+        android:layout_marginRight="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_marginLeft="@dimen/EnterDetails_cardMarginsHorizontal"
+        android:layout_gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+             <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/lock_icon"
+                android:id="@+id/confirmPassword"
+                android:hint="Confirm password"
+                 android:theme="@style/TextLabel"
+                 android:inputType="textPassword"
+                />
+
+     </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation_enter_details"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:foregroundGravity="bottom"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
+        app:menu="@menu/enter_details_bottom_nav"
+        android:textAlignment="center"
+        app:itemTextColor="@color/white"
+        />
+</android.support.design.widget.CoordinatorLayout>

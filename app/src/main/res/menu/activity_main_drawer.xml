@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Products">
+        <menu>
+        <item
+            android:id="@+id/nav_mobiles"
+            android:title="Mobiles" />
+        <item
+            android:id="@+id/nav_tv"
+            android:title="TVs" />
+        <item
+            android:id="@+id/nav_laptop"
+            android:title="Laptop" />
+        <item
+            android:id="@+id/nav_appliances"
+            android:title="Appliances" />
+        <item
+            android:id="@+id/nav_furniture"
+            android:title="Furniture" />
+
+        <item
+            android:id="@+id/nav_fashion"
+            android:title="Fashion" />
+        <item
+            android:id="@+id/nav_more"
+            android:title="More..." />
+        </menu>
+    </item>
+        <item android:title="User">
+            <menu>
+         <item
+             android:id="@+id/nav_cart"
+             android:title="My cart" />
+         <item
+             android:id="@+id/nav_order"
+             android:title="My order" />
+         <item
+             android:id="@+id/nav_products"
+             android:title="My products"/>
+            </menu>
+
+     </item>
+
+    <group>
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/setting"
+            android:title="Settings" />
+    </group>
+
+</menu>

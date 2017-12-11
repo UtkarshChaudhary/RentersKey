@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/particular_product_cart_it"
+        android:title="Cart it"
+        />
+    <item
+        android:id="@+id/particular_product_buy_it"
+        android:title="Buy it"
+        />
+    <item
+        android:id="@+id/particular_product_rent_it"
+        android:title="Rent it"
+        />
+</menu>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout
+    tools:context="com.example.lenovo.renterskey.Activities.PostAdd"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+
+    >
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_post_add"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+     <android.support.v4.widget.NestedScrollView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+         android:id="@+id/post_add_details_view"
+         >
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="60dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:clickable="true"
+                 android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/postadd_acticity_textViewHeight"
+                android:text="Product Name"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:gravity="left"
+                android:layout_marginBottom="@dimen/postadd_acticity_editTextMargin_vertical"
+                android:layout_marginRight="@dimen/postadd_acticity_editTextMargin_horizontal"
+                android:layout_marginLeft="@dimen/postadd_acticity_editTextMargin_horizontal"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/postadd_acticity_editTextHeight"
+                android:inputType="text"
+                android:hint="Product_Name"
+                android:layout_marginTop="@dimen/postadd_acticity_editTextMargin_vertical"
+                android:layout_marginRight="@dimen/postadd_acticity_editTextMargin_horizontal"
+                android:layout_marginLeft="@dimen/postadd_acticity_editTextMargin_horizontal"
+                android:layout_marginBottom="@dimen/postadd_acticity_editTextMargin_vertical"
+                android:id="@+id/product_name_postadd"
+                android:theme="@style/TextLabel"
+                android:background="@drawable/textview_border"
+                />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/postadd_acticity_textViewHeight"
+                    android:text="Category"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:gravity="left"
+                    android:layout_marginBottom="@dimen/postadd_acticity_editTextMargin_vertical"
+                    android:layout_marginTop="@dimen/postadd_acticity_editTextMargin_vertical"
+                    android:layout_marginRight="@dimen/postadd_acticity_editTextMargin_horizontal"
+                    android:layout_marginLeft="@dimen/postadd_acticity_editTextMargin_horizontal"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/postadd_acticity_editTextHeight"
+                    android:layout_marginBottom="@dimen/postadd_acticity_editTextMargin_vertical"
+                    android:layout_marginTop="@dimen/postadd_acticity_editTextMargin_vertical"
+                    android:layout_marginRight="@dimen/postadd_acticity_editTextMargin_horizontal"
+                    android:layout_marginLeft="@dimen/postadd_acticity_editTextMargin_horizontal"
+                    android:id="@+id/category_spinner_postadd"
+                    android:spinnerMode="dialog"
+                    android:background="@drawable/textview_border"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/postadd_acticity_textViewHeight"
+                    android:text="Type"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:gravity="left"
+                    android:layout_marginRight="@dimen/postadd_acticity_editTextMargin_horizontal"
+                    android:layout_marginLeft="@dimen/postadd_acticity_editTextMargin_horizontal"
+                    android:layout_marginBottom="@dimen/postadd_acticity_editTextMargin_vertical"
+                    android:layout_marginTop="@dimen/postadd_acticity_editTextMargin_vertical"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/postadd_acticity_editTextHeight"
+                    android:layout_marginBottom="@dimen/postadd_acticity_editTextMargin_vertical"
+                    android:layout_marginTop="@dimen/postadd_acticity_editTextMargin_vertical"
+                    android:layout_marginRight="@dimen/postadd_acticity_editTextMargin_horizontal"
+                    android:layout_marginLeft="@dimen/postadd_acticity_editTextMargin_horizontal"
+                    android:id="@+id/type_spinner_postadd"
+                    android:spinnerMode="dialog"
+                    android:background="@drawable/textview_border"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/postadd_acticity_textViewHeight"
+                    android:text="Rent Price"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:gravity="left"
+                    android:layout_marginRight="@dimen/postadd_acticity_editTextMargin_horizontal"
+                    android:layout_marginLeft="@dimen/postadd_acticity_editTextMargin_horizontal"
+                    android:layout_marginBottom="@dimen/postadd_acticity_editTextMargin_vertical"
+                    android:layout_marginTop="@dimen/postadd_acticity_editTextMargin_vertical"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/postadd_acticity_editTextHeight"
+                android:inputType="number"
+                android:hint="Rent Price(leave blank if not for rent)"
+                android:id="@+id/rent_price_postadd"
+                android:layout_marginBottom="@dimen/postadd_acticity_editTextMargin_vertical"
+                android:layout_marginTop="@dimen/postadd_acticity_editTextMargin_vertical"
+                android:layout_marginRight="@dimen/postadd_acticity_editTextMargin_horizontal"
+                android:layout_marginLeft="@dimen/postadd_acticity_editTextMargin_horizontal"
+                android:theme="@style/TextLabel"
+                android:background="@drawable/textview_border"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/postadd_acticity_textViewHeight"
+                    android:text="Sell Price"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:gravity="left"
+                    android:layout_marginRight="@dimen/postadd_acticity_editTextMargin_horizontal"
+                    android:layout_marginLeft="@dimen/postadd_acticity_editTextMargin_horizontal"
+                    android:layout_marginBottom="@dimen/postadd_acticity_editTextMargin_vertical"
+                    android:layout_marginTop="@dimen/postadd_acticity_editTextMargin_vertical"/>
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/postadd_acticity_editTextHeight"
+                android:inputType="number"
+                android:id="@+id/sell_price_postadd"
+                android:hint="Cost Price(leave blank if not for selling)"
+                android:layout_marginTop="@dimen/postadd_acticity_editTextMargin_vertical"
+                android:layout_marginBottom="@dimen/postadd_acticity_editTextMargin_vertical"
+                android:layout_marginRight="@dimen/postadd_acticity_editTextMargin_horizontal"
+                android:layout_marginLeft="@dimen/postadd_acticity_editTextMargin_horizontal"
+                android:theme="@style/TextLabel"
+                android:background="@drawable/textview_border"
+                />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/postadd_acticity_textViewHeight"
+                    android:text="Description"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:gravity="left"
+                    android:layout_marginRight="@dimen/postadd_acticity_editTextMargin_horizontal"
+                    android:layout_marginLeft="@dimen/postadd_acticity_editTextMargin_horizontal"
+                    android:layout_marginBottom="@dimen/postadd_acticity_editTextMargin_vertical"
+                    android:layout_marginTop="@dimen/postadd_acticity_editTextMargin_vertical"
+                    />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/description_postadd"
+                android:minHeight="@dimen/postadd_acticity_editTextDescriptionHeight"
+                android:hint="@string/postadd_description"
+                android:layout_marginTop="@dimen/postadd_acticity_editTextMargin_vertical"
+                android:layout_marginBottom="@dimen/postadd_acticity_editTextMargin_vertical"
+                android:layout_marginRight="@dimen/postadd_acticity_editTextMargin_horizontal"
+                android:layout_marginLeft="@dimen/postadd_acticity_editTextMargin_horizontal"
+                android:inputType="textMultiLine"
+                android:textAlignment="viewStart"
+                android:theme="@style/TextLabel"
+                android:background="@drawable/textview_border"/>
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="100dp" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+     </android.support.v4.widget.NestedScrollView>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation_post_add"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:background="@color/gray"
+        >
+        <include layout="@layout/post_add_bottom_nav"/>
+    </android.support.design.widget.BottomNavigationView>
+
+</android.support.design.widget.CoordinatorLayout>
+
+

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "398784371136",
+    "firebase_url": "https://renterskey.firebaseio.com",
+    "project_id": "renterskey",
+    "storage_bucket": "renterskey.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:398784371136:android:76467c84d6d344c9",
+        "android_client_info": {
+          "package_name": "com.example.lenovo.renterskey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "398784371136-g6ctc65us21mfoe5omtcr2ing5j6unnc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lenovo.renterskey",
+            "certificate_hash": "7f0ab48598d34f77c8af5384b56c87cf001ea5a1"
+          }
+        },
+        {
+          "client_id": "398784371136-u5179qra6ihhve34s1jg67k0gcoaagtc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9u7HUMCq4a_JAsUrqUNnn9Xi7Ys8cgbE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "398784371136-u5179qra6ihhve34s1jg67k0gcoaagtc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
