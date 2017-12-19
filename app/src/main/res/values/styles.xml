@@ -18,6 +18,8 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+
     <style name="TextLabel" parent="TextAppearance.AppCompat">
         <item name="android:textColorHint">@color/gray</item>
         <!--<item name="android:textSize">20sp</item>-->
@@ -25,6 +27,8 @@
         <item name="colorControlNormal">@color/gray</item>
         <item name="colorControlActivated">@color/black</item>
     </style>
+    <style name="TextAppearance.AppCompat.Display1" parent="Base.TextAppearance.AppCompat.Display1"/>
+
 
 
 </resources>

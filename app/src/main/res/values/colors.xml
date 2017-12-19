@@ -9,4 +9,9 @@
     <color name="orange">@android:color/holo_orange_dark</color>
     <color name="black">@android:color/black</color>
     <color name="blue">#3232ff</color>
+
+    <color name="material_blue">#5677fc</color>
+    <color name="green">#00BFA5</color>
+    <color name="background">#323232</color>
+
 </resources>

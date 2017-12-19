@@ -1,4 +1,4 @@
-package com.example.lenovo.renterskey.NetworkingPostRequest;
+package com.example.lenovo.renterskey.Networking;
 
 /**
  * Created by lenovo on 10-12-2017.

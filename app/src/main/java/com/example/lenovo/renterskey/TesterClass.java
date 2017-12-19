@@ -10,7 +10,7 @@ public class TesterClass extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tester_class);
 
-//        ApiInterfacePostRequest apiInterface= ClientServicePostRequest.createService();
+//        ApiInterface apiInterface= ClientService.createService();
 //        UserDetailVerification user=new UserDetailVerification("jaat@s","9391");
 //        Call<UserVerificationResponse> call=apiInterface.userVerificationPostRequest(user);
 //        call.enqueue(new Callback<UserVerificationResponse>() {

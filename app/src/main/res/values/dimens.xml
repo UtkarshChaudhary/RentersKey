@@ -49,8 +49,8 @@
     <!--uploadImages Activity-->
     <dimen name="uplaod_images_horizontalLinearLayout_padding_horizontal">5dp</dimen>
     <dimen name="uplaod_images_horizontalLinearLayout_padding_vertical">10dp</dimen>
-    <dimen name="upload_images_ImageButtonHeight">90dp</dimen>
-    <dimen name="upload_images_uploadButtomHeight">25dp</dimen>
-    <dimen name="upload_images_horizontalLinearLayout_margin_horizonatal">15dp</dimen>
+    <dimen name="upload_images_ImageButtonHeight">110dp</dimen>
+    <dimen name="upload_images_Textview_below_image_Height">20dp</dimen>
+    <dimen name="upload_images_horizontalLinearLayout_margin_horizonatal">20dp</dimen>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.lenovo.renterskey.NetworkingPostRequest;
+package com.example.lenovo.renterskey.Networking;
 
 import java.util.Random;
 
@@ -40,8 +40,14 @@ public class UserDetails {
         this.verificationcode =""+vc;
     }
 
+    public UserDetails(String email, String verificationcode) {
+        this.email = email;
+        this.verificationcode = verificationcode;
+    }
+
 
     public String getEmail(){
         return email;
     }
+
 }

@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -32,14 +31,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lenovo.renterskey.IntentAndSharedPreferences.IntentConstant;
 import com.example.lenovo.renterskey.IntentAndSharedPreferences.SharedPreferencesConstant;
-import com.example.lenovo.renterskey.NetworkingPostRequest.ApiInterfacePostRequest;
-import com.example.lenovo.renterskey.NetworkingPostRequest.ClientServicePostRequest;
-import com.example.lenovo.renterskey.NetworkingPostRequest.SimplePostRequest;
-import com.example.lenovo.renterskey.NetworkingPostRequest.UserDetailVerification;
-import com.example.lenovo.renterskey.NetworkingPostRequest.UserDetails;
-import com.example.lenovo.renterskey.NetworkingPostRequest.UserVerificationResponse;
+import com.example.lenovo.renterskey.Networking.ApiInterface;
+import com.example.lenovo.renterskey.Networking.ClientService;
+import com.example.lenovo.renterskey.Networking.UserLoginResponse;
+import com.example.lenovo.renterskey.Networking.UserDetails;
 import com.example.lenovo.renterskey.R;
 
 import java.util.ArrayList;
@@ -114,16 +110,16 @@ public class EnterDetails extends AppCompatActivity implements AdapterView.OnIte
                            stringArray[4],stringArray[5],stringArray[6],stringArray[7],state,stringArray[8]);
 
 
-                  ApiInterfacePostRequest apiInterfacePostRequest = ClientServicePostRequest.createService();
+                  ApiInterface apiInterface = ClientService.createService();
 
-                   retrofit2.Call<SimplePostRequest> call  =  apiInterfacePostRequest.sendSimplePostRequest(userDetails);
-                   call.enqueue(new Callback<SimplePostRequest>() {
+                   retrofit2.Call<UserLoginResponse> call  =  apiInterface.sendSimplePostRequest(userDetails);
+                   call.enqueue(new Callback<UserLoginResponse>() {
                        @Override
-                       public void onResponse(retrofit2.Call<SimplePostRequest> call, Response<SimplePostRequest> response) {
+                       public void onResponse(retrofit2.Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
                          //  Log.d("abcdefg",response.toString());
                           Log.d("abcdefg", "" + response.body());
-                          SimplePostRequest request=response.body();
-                          if(request.success) {
+                          UserLoginResponse request=response.body();
+                          if(request.isSuccess()) {
                               SharedPreferences sharedPreferences=getSharedPreferences(SharedPreferencesConstant.SHAREDPREFERENCE_NAME,MODE_PRIVATE);
                               SharedPreferences.Editor editor= sharedPreferences.edit();
                               editor.putString(SharedPreferencesConstant.EMAIL,userDetails.getEmail());
@@ -137,7 +133,7 @@ public class EnterDetails extends AppCompatActivity implements AdapterView.OnIte
 
                        }
                       @Override
-                       public void onFailure(retrofit2.Call<SimplePostRequest> call, Throwable t) {
+                       public void onFailure(retrofit2.Call<UserLoginResponse> call, Throwable t) {
                            Log.d("abcdefg","error On failure"+t.getMessage().toString());
 
                        }
@@ -355,11 +351,11 @@ public class EnterDetails extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private boolean isEmailValid(String email){
-        return email.contains("@");
+        return (email.contains("@")&&email.contains("."));
     }
 
     private boolean isPasswordValid(String password){
-        return password.length()>4;
+        return password.length()>6;
     }
 
     /**
@@ -390,7 +386,7 @@ public class EnterDetails extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    private void verifyUser(SimplePostRequest res){
+    private void verifyUser(UserLoginResponse res){
 
         showProgress(false);
         View v= getLayoutInflater().inflate(R.layout.dialogbox_verify_user,null);
@@ -411,7 +407,7 @@ public class EnterDetails extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onShow(DialogInterface dialogInterface) {
 
-                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                Button button = (dialog).getButton(AlertDialog.BUTTON_POSITIVE);
                 button.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -425,22 +421,22 @@ public class EnterDetails extends AppCompatActivity implements AdapterView.OnIte
                     }
                 });
 
-                Button button1=((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEGATIVE);
+                Button button1=(dialog).getButton(AlertDialog.BUTTON_NEGATIVE);
                 button1.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View view) {
                         // TODO Do something
                         String vc=editText.getText().toString();
-                        ApiInterfacePostRequest apiInterfacePostRequest = ClientServicePostRequest.createService();
+                        ApiInterface apiInterface = ClientService.createService();
                         SharedPreferences sharedPreferences=getSharedPreferences(SharedPreferencesConstant.SHAREDPREFERENCE_NAME,MODE_PRIVATE);
                         final String email=sharedPreferences.getString(SharedPreferencesConstant.EMAIL,null);
-                        UserDetailVerification user=new UserDetailVerification(email,vc);
-                        Call<UserVerificationResponse> call= apiInterfacePostRequest.userVerificationPostRequest(user);
+                        UserDetails user=new UserDetails(email,vc);
+                        Call<UserLoginResponse> call= apiInterface.userVerificationPostRequest(user);
 
-                        call.enqueue(new Callback<UserVerificationResponse>() {
+                        call.enqueue(new Callback<UserLoginResponse>() {
                             @Override
-                            public void onResponse(Call<UserVerificationResponse> call, Response<UserVerificationResponse> response) {
+                            public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
                                 boolean res=response.body().isSuccess();
                                 if(res){
                                     Toast.makeText(EnterDetails.this,"You are successfully verified",
@@ -458,7 +454,7 @@ public class EnterDetails extends AppCompatActivity implements AdapterView.OnIte
                             }
 
                             @Override
-                            public void onFailure(Call<UserVerificationResponse> call, Throwable t) {
+                            public void onFailure(Call<UserLoginResponse> call, Throwable t) {
 
                             }
                         });

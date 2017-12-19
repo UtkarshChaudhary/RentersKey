@@ -29,11 +29,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lenovo.renterskey.IntentAndSharedPreferences.SharedPreferencesConstant;
-import com.example.lenovo.renterskey.NetworkingPostRequest.ApiInterfacePostRequest;
-import com.example.lenovo.renterskey.NetworkingPostRequest.ClientServicePostRequest;
-import com.example.lenovo.renterskey.NetworkingPostRequest.PostAddFormData;
-import com.example.lenovo.renterskey.NetworkingPostRequest.ResponseGetProductId;
-import com.example.lenovo.renterskey.NetworkingPostRequest.UserVerificationResponse;
+import com.example.lenovo.renterskey.Networking.ApiInterface;
+import com.example.lenovo.renterskey.Networking.ClientService;
+import com.example.lenovo.renterskey.Networking.PostAddFormData;
+import com.example.lenovo.renterskey.Networking.ResponseGetProductId;
+import com.example.lenovo.renterskey.Networking.UserLoginResponse;
 import com.example.lenovo.renterskey.R;
 
 import java.util.ArrayList;
@@ -176,8 +176,8 @@ public class PostAdd extends AppCompatActivity {
         });
 
         showProgress(true);
-        ApiInterfacePostRequest apiInterfacePostRequest= ClientServicePostRequest.createService();
-        retrofit2.Call<ResponseGetProductId> call=apiInterfacePostRequest.getProductId();
+        ApiInterface apiInterface = ClientService.createService();
+        retrofit2.Call<ResponseGetProductId> call= apiInterface.getProductId();
 
         call.enqueue(new Callback<ResponseGetProductId>() {
             @Override
@@ -300,19 +300,19 @@ public class PostAdd extends AppCompatActivity {
        String userid=sharedPreferences.getString(SharedPreferencesConstant.USERID,null);
 
        if(userid==null){
-            userid="136";
+            userid="138";
         }
 
         PostAddFormData data=new PostAddFormData(category_selected,type_selected,arr[1],arr[2],
                 arr[3],productId,userid,arr[0]);
 
-        ApiInterfacePostRequest apiInterfacePostRequest=ClientServicePostRequest.createService();
+        ApiInterface apiInterface = ClientService.createService();
 
-        Call<UserVerificationResponse> responseCall=apiInterfacePostRequest.uploadDetailsOfProduct(data);
+        Call<UserLoginResponse> responseCall= apiInterface.uploadDetailsOfProduct(data);
 
-        responseCall.enqueue(new Callback<UserVerificationResponse>() {
+        responseCall.enqueue(new Callback<UserLoginResponse>() {
             @Override
-            public void onResponse(Call<UserVerificationResponse> call, Response<UserVerificationResponse> response) {
+            public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
                 Log.d("abcdefg","inside Response respnse= "+response.toString());
                 if(response.body()!=null){
                     Log.d("abcdefg","success "+response.body().isSuccess());
@@ -322,7 +322,7 @@ public class PostAdd extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UserVerificationResponse> call, Throwable t) {
+            public void onFailure(Call<UserLoginResponse> call, Throwable t) {
                 Log.d("abcdefg","inside failure");
             }
         });
