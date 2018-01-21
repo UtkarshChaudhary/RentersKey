@@ -1,10 +1,10 @@
-package com.example.lenovo.renterskey.Networking;
+package com.example.lenovo.renterskey.vo;
 
 /**
  * Created by lenovo on 10-12-2017.
  */
 
-public class PostAddFormData {
+public class ProductDetail {
     private String category;
     private String type;
     private String rent;
@@ -14,7 +14,7 @@ public class PostAddFormData {
     private String userid;
     private String productName;
 
-    public PostAddFormData(String category, String type, String rent, String price, String description, String productId, String userid, String productName) {
+    public ProductDetail(String category, String type, String rent, String price, String description, String productId, String userid, String productName) {
         this.category = category;
         this.type = type;
         this.rent = rent;

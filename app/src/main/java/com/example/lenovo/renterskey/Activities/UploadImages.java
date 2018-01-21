@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,8 +19,8 @@ import android.widget.Toast;
 
 import com.example.lenovo.renterskey.Networking.ApiInterface;
 import com.example.lenovo.renterskey.Networking.ClientService;
-import com.example.lenovo.renterskey.Networking.UserLoginResponse;
 import com.example.lenovo.renterskey.R;
+import com.example.lenovo.renterskey.vo.UserLoginResponse;
 
 import java.io.File;
 

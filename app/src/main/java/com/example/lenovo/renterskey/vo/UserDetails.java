@@ -1,4 +1,4 @@
-package com.example.lenovo.renterskey.Networking;
+package com.example.lenovo.renterskey.vo;
 
 import java.util.Random;
 

@@ -1,25 +1,51 @@
 package com.example.lenovo.renterskey.Activities;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.SearchView;
 
 import com.example.lenovo.renterskey.ExtraClasses.HorizontalScrollViewAdapter;
+import com.example.lenovo.renterskey.IntentAndSharedPreferences.IntentConstant;
+import com.example.lenovo.renterskey.Networking.ClientService;
 import com.example.lenovo.renterskey.R;
+import com.example.lenovo.renterskey.db.ProductDao;
+import com.example.lenovo.renterskey.db.RentersKeyDb;
+import com.example.lenovo.renterskey.vo.HelperJson;
+import com.example.lenovo.renterskey.vo.Products;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
    private DrawerLayout drawer;
+//    MaterialSearchView searchView;
+    ProductDao productDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        productDao=RentersKeyDb.getINSTANCE(this).productDao();
+        clearPreviousList();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -42,6 +68,27 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
+        fetchProductListForSearching();
+        //search_bar
+
+//        searchView=(MaterialSearchView)findViewById(R.id.search_bar_main_activity);
+//        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                if(newText!=null&&newText.trim().isEmpty()){
+//                    newText=newText.trim().toLowerCase();
+//                    List<String> listFound=new ArrayList<>();
+//
+//
+//                }
+//                return false;
+//            }
+//        });
     }
 
     @Override
@@ -60,6 +107,20 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+//        MenuItem item=menu.findItem(R.id.action_search);
+//        searchView.setMenuItem(item);
+
+//        SearchManager searchManager=(SearchManager)getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView=(SearchView)menu.findItem(R.id.action_search).getActionView();
+//        searchView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(MainActivity.this,SearchEngineActivity.class)));
+//            }
+//        });
+      //  searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+     //   searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this,SearchEngineActivity.class)));
+     //   searchView.setQueryHint(getResources().getString(R.string.search_title));
         return true;
     }
 
@@ -68,8 +129,24 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.;
+        switch (item.getItemId()){
+            case R.id.action_search :{
+                Intent i=new Intent(this,SearchEngineActivity.class);
+                startActivityForResult(i, IntentConstant.REQUEST_CODE_MAIN_ACTIVITY_SEARCH_ENGINE);
+                return true;
+            }
 
-        return super.onOptionsItemSelected(item);
+            case R.id.bell_icon :{
+
+                return true;
+            }
+            case R.id.cart_icon :{
+
+                return true;
+            }
+            default: return false;
+        }
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -139,4 +216,42 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void fetchProductListForSearching(){
+        Call<HelperJson<Object,List<Products>>> call= ClientService.createService().getProductsForSearch();
+        call.enqueue(new Callback<HelperJson<Object,List<Products>>>() {
+            @Override
+            public void onResponse(Call<HelperJson<Object,List<Products>>> call, Response<HelperJson<Object,List<Products>>> response) {
+//               Log.e("abcdef","onresponse");
+                if(response!=null&&response.body()!=null&&response.isSuccessful()){
+//                    Log.e("abcdef","success"+response.body().toString());
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            productDao.insertProducts(response.body().data2);
+                            return null;
+                        }
+                    }.execute();
+
+//                    Log.e("abcdef",productsList.toString());
+//                    Log.e("abcdef",productsList.size()+"");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HelperJson<Object,List<Products>>> call, Throwable t) {
+ //               Log.e("abcdef","failure"+t.toString());
+            }
+        });
+    }
+
+  private void clearPreviousList(){
+      new AsyncTask<Void, Void, Void>() {
+          @Override
+          protected Void doInBackground(Void... voids) {
+              productDao.deleteListOfProducts();
+              return null;
+          }
+      }.execute();
+  }
 }

@@ -9,12 +9,12 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -34,9 +34,9 @@ import android.widget.Toast;
 import com.example.lenovo.renterskey.IntentAndSharedPreferences.SharedPreferencesConstant;
 import com.example.lenovo.renterskey.Networking.ApiInterface;
 import com.example.lenovo.renterskey.Networking.ClientService;
-import com.example.lenovo.renterskey.Networking.UserLoginResponse;
-import com.example.lenovo.renterskey.Networking.UserDetails;
 import com.example.lenovo.renterskey.R;
+import com.example.lenovo.renterskey.vo.UserDetails;
+import com.example.lenovo.renterskey.vo.UserLoginResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -112,10 +112,10 @@ public class EnterDetails extends AppCompatActivity implements AdapterView.OnIte
 
                   ApiInterface apiInterface = ClientService.createService();
 
-                   retrofit2.Call<UserLoginResponse> call  =  apiInterface.sendSimplePostRequest(userDetails);
+                   Call<UserLoginResponse> call  =  apiInterface.sendSimplePostRequest(userDetails);
                    call.enqueue(new Callback<UserLoginResponse>() {
                        @Override
-                       public void onResponse(retrofit2.Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
+                       public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
                          //  Log.d("abcdefg",response.toString());
                           Log.d("abcdefg", "" + response.body());
                           UserLoginResponse request=response.body();
@@ -133,7 +133,7 @@ public class EnterDetails extends AppCompatActivity implements AdapterView.OnIte
 
                        }
                       @Override
-                       public void onFailure(retrofit2.Call<UserLoginResponse> call, Throwable t) {
+                       public void onFailure(Call<UserLoginResponse> call, Throwable t) {
                            Log.d("abcdefg","error On failure"+t.getMessage().toString());
 
                        }
@@ -277,7 +277,7 @@ public class EnterDetails extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
-        if(id==R.id.clear_all_fields){
+        if(id== R.id.clear_all_fields){
             AlertDialog.Builder builder=new AlertDialog.Builder(this);
             builder.setTitle("Reset all entries");
             builder.setMessage("Do you want to clear all entries and want to reset them again" );
@@ -391,7 +391,7 @@ public class EnterDetails extends AppCompatActivity implements AdapterView.OnIte
         showProgress(false);
         View v= getLayoutInflater().inflate(R.layout.dialogbox_verify_user,null);
         TextView textView=v.findViewById(R.id.dialogbox_verify_user_textView);
-        textView.setText("Enter verification code from your email id mentioned in signup page");
+        textView.setText("Enter verification code from your email category mentioned in signup page");
         final EditText editText=v.findViewById(R.id.dialogbox_verify_user_editText);
 
         final AlertDialog dialog = new AlertDialog.Builder(EnterDetails.this)

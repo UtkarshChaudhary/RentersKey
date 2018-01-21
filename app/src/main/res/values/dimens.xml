@@ -6,6 +6,7 @@
     <dimen name="nav_header_height">100dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="serach_bar_vertical_margin">10dp</dimen>
+    <dimen name="md_keylines">16dp</dimen>
 
     <!--enter details-->
     <dimen name="EnterDetails_Title_MarginVertical">16dp</dimen>
@@ -15,7 +16,7 @@
     <dimen name="EnterDetails_cardHeightAddress">55dp</dimen>
     <dimen name="EnterDetails_cardMarginsVertical">8dp</dimen>
     <dimen name="EnterDetails_cardMarginsHorizontal">10dp</dimen>
-    <dimen name="md_keylines">16dp</dimen>
+
 
     <!-- horizontal scrollview -->
     <dimen name="horizontalScrollview_itemWidth">80dp</dimen>
@@ -52,5 +53,24 @@
     <dimen name="upload_images_ImageButtonHeight">110dp</dimen>
     <dimen name="upload_images_Textview_below_image_Height">20dp</dimen>
     <dimen name="upload_images_horizontalLinearLayout_margin_horizonatal">20dp</dimen>
+
+    <!--item_product-->
+    <dimen name="product_card_height">304dp</dimen>
+    <dimen name="product_image_height">200dp</dimen>
+    <dimen name="product_title_height">40dp</dimen>
+    <dimen name="product_price_text_height">48dp</dimen>
+
+    <!--product details -->
+    <dimen name="product_detail_product_image">275dp</dimen>
+    <dimen name="product_detail_product_price">35dp</dimen>
+    <dimen name="product_detail_textsize">23sp</dimen>
+
+    <!--to change height if text in bottom navigation view -->
+    <dimen name="design_bottom_navigation_text_size" tools:override="true">22sp</dimen>
+    <!--<dimen name="design_bottom_navigation_active_text_size" tools:override="true">22sp</dimen>-->
+    <dimen name="design_bottom_navigation_item_max_width" tools:override="true">600dp</dimen>
+    <dimen name="design_bottom_navigation_active_item_max_width" tools:override="true">600dp</dimen>
+    <!--<dimen name="bottom_navigation_margin_bottom" tools:override="true" >25dp</dimen>-->
+    <!--<dimen name="bottom_navigation_small_margin_bottom" tools:override="true">25dp</dimen>-->
 
 </resources>

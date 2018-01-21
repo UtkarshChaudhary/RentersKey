@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RentersKey.iml" filepath="$PROJECT_DIR$/RentersKey.iml" />
+      <module fileurl="file://C:\Users\lenovo\AndroidStudioProjects\RentersKeyApp\RentersKey.iml" filepath="C:\Users\lenovo\AndroidStudioProjects\RentersKeyApp\RentersKey.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RentersKeyApp.iml" filepath="$PROJECT_DIR$/RentersKeyApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -14,8 +14,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +31,10 @@ import android.widget.Toast;
 import com.example.lenovo.renterskey.IntentAndSharedPreferences.SharedPreferencesConstant;
 import com.example.lenovo.renterskey.Networking.ApiInterface;
 import com.example.lenovo.renterskey.Networking.ClientService;
-import com.example.lenovo.renterskey.Networking.PostAddFormData;
-import com.example.lenovo.renterskey.Networking.ResponseGetProductId;
-import com.example.lenovo.renterskey.Networking.UserLoginResponse;
 import com.example.lenovo.renterskey.R;
+import com.example.lenovo.renterskey.vo.ProductDetail;
+import com.example.lenovo.renterskey.vo.ResponseGetProductId;
+import com.example.lenovo.renterskey.vo.UserLoginResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -177,11 +177,11 @@ public class PostAdd extends AppCompatActivity {
 
         showProgress(true);
         ApiInterface apiInterface = ClientService.createService();
-        retrofit2.Call<ResponseGetProductId> call= apiInterface.getProductId();
+        Call<ResponseGetProductId> call= apiInterface.getProductId();
 
         call.enqueue(new Callback<ResponseGetProductId>() {
             @Override
-            public void onResponse(retrofit2.Call<ResponseGetProductId> call, Response<ResponseGetProductId> response) {
+            public void onResponse(Call<ResponseGetProductId> call, Response<ResponseGetProductId> response) {
                 if(response.body()!=null){
                     productId=response.body().getProductId();
                     Log.d("abcdefg","success productId ="+productId);
@@ -192,7 +192,7 @@ public class PostAdd extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(retrofit2.Call<ResponseGetProductId> call, Throwable t) {
+            public void onFailure(Call<ResponseGetProductId> call, Throwable t) {
                 Log.d("abcdefg","failure");
                 showProgress(false);
             }
@@ -303,7 +303,7 @@ public class PostAdd extends AppCompatActivity {
             userid="138";
         }
 
-        PostAddFormData data=new PostAddFormData(category_selected,type_selected,arr[1],arr[2],
+        ProductDetail data=new ProductDetail(category_selected,type_selected,arr[1],arr[2],
                 arr[3],productId,userid,arr[0]);
 
         ApiInterface apiInterface = ClientService.createService();

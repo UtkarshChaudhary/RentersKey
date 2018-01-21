@@ -1,19 +1,31 @@
 package com.example.lenovo.renterskey.Activities;
 
-import android.support.annotation.NonNull;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.lenovo.renterskey.R;
+import com.example.lenovo.renterskey.ExtraClasses.NavigationController;
 
-public class ShowProducts extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import javax.inject.Inject;
+
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+
+public class ShowProducts extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener ,HasSupportFragmentInjector{
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+
+    @Inject
+    NavigationController navigationController;
 
     private DrawerLayout drawer;
     @Override
@@ -33,6 +45,9 @@ public class ShowProducts extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_showProduct);
         navigationView.setNavigationItemSelectedListener(this);
+        if(savedInstanceState==null){
+            navigationController.navigateToShowProducts("electronics");
+        }
     }
 
     @Override
@@ -128,5 +143,11 @@ public class ShowProducts extends AppCompatActivity implements NavigationView.On
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    @Override
+    public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
     }
 }

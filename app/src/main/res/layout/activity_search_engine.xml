@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.lenovo.renterskey.Activities.SearchEngineActivity"
+     android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+
+        <com.mancj.materialsearchbar.MaterialSearchBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:mt_hint="@string/search_title"
+            app:mt_hintColor="@color/black"
+            app:mt_backIconDrawable="@drawable/arrow_back"
+            app:mt_backIconTint="@color/gray"
+            app_mt_clearIconDrawable="@drawable/cross"
+            app:mt_clearIconTint="@color/gray"
+            android:id="@+id/search_view_SearchEngine"
+            style="@style/MaterialSearchBarLight"
+            app:mt_navIconEnabled="false"
+            />
+</android.support.design.widget.CoordinatorLayout>

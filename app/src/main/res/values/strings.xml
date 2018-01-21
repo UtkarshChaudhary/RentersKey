@@ -63,5 +63,6 @@
         use, its specifications etc.</string>
 
     <string name="slogan">place of metting Renters/sellers to customers</string>
+    <string name="unknown_error">Unknown Error</string>
 
 </resources>

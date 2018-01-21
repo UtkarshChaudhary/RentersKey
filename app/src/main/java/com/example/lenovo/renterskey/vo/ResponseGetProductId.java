@@ -1,4 +1,4 @@
-package com.example.lenovo.renterskey.Networking;
+package com.example.lenovo.renterskey.vo;
 
 /**
  * Created by lenovo on 11-12-2017.

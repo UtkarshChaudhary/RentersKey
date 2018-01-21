@@ -7,11 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
-import android.support.v7.app.AppCompatActivity;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -28,14 +26,12 @@ import com.example.lenovo.renterskey.IntentAndSharedPreferences.IntentConstant;
 import com.example.lenovo.renterskey.IntentAndSharedPreferences.SharedPreferencesConstant;
 import com.example.lenovo.renterskey.Networking.ApiInterface;
 import com.example.lenovo.renterskey.Networking.ClientService;
-import com.example.lenovo.renterskey.Networking.LoginBody;
-import com.example.lenovo.renterskey.Networking.UserLoginResponse;
 import com.example.lenovo.renterskey.R;
+import com.example.lenovo.renterskey.vo.LoginBody;
+import com.example.lenovo.renterskey.vo.UserLoginResponse;
 import com.facebook.CallbackManager;
 import com.google.android.gms.common.SignInButton;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,6 +64,7 @@ public class StartingActivity extends AppCompatActivity  {
     private View mProgressView;
     private View mLoginFormView;
     private Button registerbutton;
+    private Button forgetPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -77,6 +74,14 @@ public class StartingActivity extends AppCompatActivity  {
 
         mEmailView=findViewById(R.id.email);
         mPasswordView=findViewById(R.id.password);
+        forgetPassword=findViewById(R.id.forget_password);
+        forgetPassword.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(StartingActivity.this,MainActivity.class);
+                startActivity(i);
+            }
+        });
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -110,7 +115,7 @@ public class StartingActivity extends AppCompatActivity  {
 
         //facebook login
 //        callbackManager = CallbackManager.Factory.create();
-//        LoginButton loginButton = (LoginButton)findViewById(R.id.facebook_login_button);
+//        LoginButton loginButton = (LoginButton)findViewById(R.category.facebook_login_button);
 //        loginButton.setReadPermissions("email");
 //        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 //            @Override
@@ -148,7 +153,7 @@ public class StartingActivity extends AppCompatActivity  {
 //
 //                        });
 //                Bundle parameters = new Bundle();
-//                parameters.putString("fields", "id,name,email,gender,birthday");
+//                parameters.putString("fields", "category,name,email,gender,birthday");
 //                request.setParameters(parameters);
 //                request.executeAsync();
 
@@ -173,7 +178,7 @@ public class StartingActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(StartingActivity.this,EnterDetails.class);
-                startActivityForResult(i,IntentConstant.REGUEST_CODE_REGISTER_USER);
+                startActivityForResult(i, IntentConstant.REGUEST_CODE_REGISTER_USER);
             }
         });
     }
@@ -181,12 +186,13 @@ public class StartingActivity extends AppCompatActivity  {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if(requestCode==IntentConstant.REGUEST_CODE_REGISTER_USER) {
+        if(requestCode== IntentConstant.REGUEST_CODE_REGISTER_USER) {
             if(resultCode==RESULT_OK) {
                 SharedPreferences sharedPreferences=getSharedPreferences(SharedPreferencesConstant.SHAREDPREFERENCE_NAME,MODE_PRIVATE);
                Log.d("abcdefg","startingActivity userid "+sharedPreferences.getString(SharedPreferencesConstant.USERID,null));
                 Log.d("abcdefg","startingActivity email "+sharedPreferences.getString(SharedPreferencesConstant.EMAIL,null));
-
+               Intent i=new Intent(StartingActivity.this,MainActivity.class);
+               startActivity(i);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -357,6 +363,7 @@ public class StartingActivity extends AppCompatActivity  {
         }
         return super.dispatchTouchEvent( event );
     }
+
 
 
 }

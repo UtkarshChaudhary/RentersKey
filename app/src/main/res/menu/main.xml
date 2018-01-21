@@ -3,12 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/bell_icon"
+        android:id="@+id/action_search"
+        android:title="@string/search_title"
         app:showAsAction="always"
-        android:icon="@drawable/bell"/>
+        android:icon="@mipmap/search"/>
+        <!--app:actionViewClass="android.widget.SearchView" />-->
+    <item
+        android:id="@+id/bell_icon"
+        android:title="Notification"
+        android:icon="@drawable/bell"
+        app:showAsAction="collapseActionView|ifRoom" />
     <item
         android:id="@+id/cart_icon"
+        android:title="Cart"
         app:showAsAction="always"
         android:icon="@drawable/cart"/>
+
 </menu>
 
