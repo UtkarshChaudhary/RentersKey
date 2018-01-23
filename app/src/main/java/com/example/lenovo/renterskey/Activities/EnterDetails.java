@@ -118,17 +118,19 @@ public class EnterDetails extends AppCompatActivity implements AdapterView.OnIte
                        public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
                          //  Log.d("abcdefg",response.toString());
                           Log.d("abcdefg", "" + response.body());
-                          UserLoginResponse request=response.body();
-                          if(request.isSuccess()) {
+                           Log.d("abcdefg", "" + response.body().firstname+" "+response.body().getUserid());
+                          UserLoginResponse result=response.body();
+                          if(result!=null&&result.isSuccess()) {
                               SharedPreferences sharedPreferences=getSharedPreferences(SharedPreferencesConstant.SHAREDPREFERENCE_NAME,MODE_PRIVATE);
                               SharedPreferences.Editor editor= sharedPreferences.edit();
                               editor.putString(SharedPreferencesConstant.EMAIL,userDetails.getEmail());
-                              editor.putString(SharedPreferencesConstant.USERID,request.getUserid());
+                              editor.putString(SharedPreferencesConstant.USERID,result.getUserid());
+                              editor.putString(SharedPreferencesConstant.FIRSTNAME,result.firstname);
                               editor.commit();
-                             verifyUser(request);
+                              verifyUser(result);
 
                           }else{
-                             showErrorMessager(request.error);
+                             showErrorMessager(result.error);
                           }
 
                        }
@@ -391,7 +393,7 @@ public class EnterDetails extends AppCompatActivity implements AdapterView.OnIte
         showProgress(false);
         View v= getLayoutInflater().inflate(R.layout.dialogbox_verify_user,null);
         TextView textView=v.findViewById(R.id.dialogbox_verify_user_textView);
-        textView.setText("Enter verification code from your email category mentioned in signup page");
+        textView.setText("Enter verification code from your email mentioned in signup page");
         final EditText editText=v.findViewById(R.id.dialogbox_verify_user_editText);
 
         final AlertDialog dialog = new AlertDialog.Builder(EnterDetails.this)
@@ -442,7 +444,7 @@ public class EnterDetails extends AppCompatActivity implements AdapterView.OnIte
                                     Toast.makeText(EnterDetails.this,"You are successfully verified",
                                             Toast.LENGTH_LONG).show();
                                     dialog.dismiss();
-                                   setResult(RESULT_OK);
+                                     setResult(RESULT_OK);
                                     finish();
                                 }else{
                                     Toast.makeText(EnterDetails.this,"Entered verification code is incorrect",

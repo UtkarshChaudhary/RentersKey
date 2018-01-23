@@ -62,6 +62,13 @@ public class ProductDetails extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         toolbar=findViewById(R.id.toolbar_product_detaills);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(getDrawable(R.drawable.arrow_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         adapter=new ImageViewAdapter();
         priceTextView=findViewById(R.id.price_product_detail);
         rentTextView=findViewById(R.id.rent_product_detail);
@@ -83,6 +90,13 @@ public class ProductDetails extends AppCompatActivity {
         if(product_id!=null||!product_id.isEmpty()) {
             fetchProductDetails(product_id);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+
     }
 
     private void fetchProductDetails(String id){

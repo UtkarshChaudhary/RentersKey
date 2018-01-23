@@ -8,14 +8,18 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="2dp"
+        android:layout_marginLeft="2dp"
+        android:textSize="18sp"
         android:id="@+id/dialogbox_verify_user_textView"/>
 
     <EditText
-        android:layout_width="50dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:id="@+id/dialogbox_verify_user_editText"
         android:inputType="number"
-        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:hint="OTP"
         />
 
 </LinearLayout>

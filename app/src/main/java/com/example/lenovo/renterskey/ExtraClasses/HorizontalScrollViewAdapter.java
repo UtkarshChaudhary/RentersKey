@@ -22,8 +22,9 @@ public class HorizontalScrollViewAdapter extends RecyclerView.Adapter<Horizontal
     private static final int LENGTH=8;
     private final Drawable[] picture;
     private final String[] text;
+    private final OnItemClicked onItemClicked;
 
-    public HorizontalScrollViewAdapter(Context context){
+    public HorizontalScrollViewAdapter(Context context,OnItemClicked onItemClicked){
         Resources resources=context.getResources();
         text=resources.getStringArray(R.array.products_type);
         TypedArray a=resources.obtainTypedArray(R.array.products_images);
@@ -32,10 +33,11 @@ public class HorizontalScrollViewAdapter extends RecyclerView.Adapter<Horizontal
            picture[i]=a.getDrawable(i);
         }
         a.recycle();
+        this.onItemClicked=onItemClicked;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()),parent);
+        return new ViewHolder(LayoutInflater.from(parent.getContext()),parent,onItemClicked);
     }
 
     @Override
@@ -52,19 +54,25 @@ public class HorizontalScrollViewAdapter extends RecyclerView.Adapter<Horizontal
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView picture;
         public TextView textView;
-
-        public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
+        public OnItemClicked onItemClicked;
+        public ViewHolder(LayoutInflater inflater, ViewGroup parent,OnItemClicked onItemClicked) {
             super(inflater.inflate(R.layout.horizontal_scrollview, parent, false));
             picture = (ImageView) itemView.findViewById(R.id.horizontalscrollview_imageview);
             textView=(TextView)itemView.findViewById(R.id.horizontalscrollview_textview);
+            this.onItemClicked=onItemClicked;
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    onItemClicked.onClickFunction(view,getAdapterPosition());
                   //  Context context = view.getContext();
                     //start new activity corresponding to item selected
                 }
             });
         }
+    }
+
+    public interface OnItemClicked{
+        void onClickFunction(View view,int pos);
     }
 }
 

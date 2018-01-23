@@ -138,15 +138,6 @@ public class MultiPurpose extends AppCompatActivity implements NavigationView.On
             }
             break;
 
-            case R.id.nav_order:{
-
-            }
-            break;
-
-            case R.id.nav_products:{
-
-            }
-            break;
 
             case R.id.nav_setting:{
 

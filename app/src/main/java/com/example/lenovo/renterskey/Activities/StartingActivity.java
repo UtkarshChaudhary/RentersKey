@@ -39,25 +39,10 @@ import retrofit2.Response;
 
 public class StartingActivity extends AppCompatActivity  {
 
-    //intent reguest code
-
     CallbackManager callbackManager;
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
+
+    // Id to identity READ_CONTACTS permission request.
     private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-
 
     private EditText mEmailView;
     private EditText mPasswordView;
@@ -68,7 +53,12 @@ public class StartingActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
+        SharedPreferences sharedPreferences=getSharedPreferences(SharedPreferencesConstant.SHAREDPREFERENCE_NAME,MODE_PRIVATE);
+        String userId=sharedPreferences.getString(SharedPreferencesConstant.USERID,null);
+        if(userId!=null&&!userId.isEmpty()){
+            Intent i=new Intent(StartingActivity.this,MainActivity.class);
+            startActivityForResult(i,IntentConstant.STARTINGACTIVITY_MAINACTIVITY);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starting);
 
@@ -78,10 +68,12 @@ public class StartingActivity extends AppCompatActivity  {
         forgetPassword.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(StartingActivity.this,MainActivity.class);
-                startActivity(i);
+//                Intent i=new Intent(StartingActivity.this,MainActivity.class);
+//                startActivity(i);
             }
         });
+        mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -101,8 +93,7 @@ public class StartingActivity extends AppCompatActivity  {
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
+
 
 //        //from firebase video
 //        FirebaseAuth auth=FirebaseAuth.getInstance();
@@ -178,7 +169,7 @@ public class StartingActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(StartingActivity.this,EnterDetails.class);
-                startActivityForResult(i, IntentConstant.REGUEST_CODE_REGISTER_USER);
+                startActivityForResult(i, IntentConstant.REGISTER_USER);
             }
         });
     }
@@ -186,26 +177,23 @@ public class StartingActivity extends AppCompatActivity  {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if(requestCode== IntentConstant.REGUEST_CODE_REGISTER_USER) {
+        if(requestCode== IntentConstant.REGISTER_USER) {
             if(resultCode==RESULT_OK) {
                 SharedPreferences sharedPreferences=getSharedPreferences(SharedPreferencesConstant.SHAREDPREFERENCE_NAME,MODE_PRIVATE);
-               Log.d("abcdefg","startingActivity userid "+sharedPreferences.getString(SharedPreferencesConstant.USERID,null));
-                Log.d("abcdefg","startingActivity email "+sharedPreferences.getString(SharedPreferencesConstant.EMAIL,null));
-               Intent i=new Intent(StartingActivity.this,MainActivity.class);
-               startActivity(i);
+//               Log.d("abcdefg","startingActivity userid "+sharedPreferences.getString(SharedPreferencesConstant.USERID,null));
+//                Log.d("abcdefg","startingActivity email "+sharedPreferences.getString(SharedPreferencesConstant.EMAIL,null));
+               String userId=sharedPreferences.getString(SharedPreferencesConstant.USERID,null);
+               if(userId!=null&&!userId.isEmpty()) {
+                   Intent i = new Intent(StartingActivity.this, MainActivity.class);
+                   startActivityForResult(i,IntentConstant.STARTINGACTIVITY_MAINACTIVITY);
+               }
             }
+        }else if(requestCode==IntentConstant.STARTINGACTIVITY_MAINACTIVITY){
+            onBackPressed();
+            finish();
         }
-        super.onActivityResult(requestCode, resultCode, data);
-//        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-//    private void populateAutoComplete() {
-//        if (!mayRequestContacts()) {
-//            return;
-//        }
-//
-//        getLoaderManager().initLoader(0, null, this);
-//    }
 
 //    private boolean mayRequestContacts() {
 //        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -229,9 +217,9 @@ public class StartingActivity extends AppCompatActivity  {
 //        return false;
 //    }
 
-    /**
-     * Callback received when a permissions request has been completed.
-     */
+
+    //Callback received when a permissions request has been completed.
+
 //    @Override
 //    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
 //                                           @NonNull int[] grantResults) {
@@ -251,8 +239,8 @@ public class StartingActivity extends AppCompatActivity  {
     private void attemptLogin() {
 
 
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String email = mEmailView.getText().toString().trim();
+        String password = mPasswordView.getText().toString().trim();
 
         if (email.isEmpty()) {
             mEmailView.requestFocus();
@@ -283,14 +271,27 @@ public class StartingActivity extends AppCompatActivity  {
             @Override
             public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
                 Log.d("abcdefg","inside Response respnse= "+response.toString());
+                Log.d("abcdefg","success "+response.body().isSuccess());
                 if(response.body()!=null){
                     Log.d("abcdefg","success "+response.body().isSuccess());
-                    Log.d("abcdefg","success "+response.body().firstname);
-                    Log.d("abcdefg",response.body().getUserid());
+                    Log.d("abcdefg","success "+response.body().firstname+"bla bla");
+            //        Log.d("abcdefg",response.body().getUserid());
                     showProgress(false);
+                    if(response.body().firstname!=null&&response.body().getUserid()!=null) {
+                        SharedPreferences sharedPreferences=getSharedPreferences(SharedPreferencesConstant.SHAREDPREFERENCE_NAME,MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString(SharedPreferencesConstant.FIRSTNAME, response.body().firstname);
+                        editor.putString(SharedPreferencesConstant.USERID, response.body().getUserid());
+                        editor.putString(SharedPreferencesConstant.EMAIL, loginBody.getEmail());
+                        editor.commit();
+                        Intent i = new Intent(StartingActivity.this, MainActivity.class);
+                        startActivityForResult(i,IntentConstant.STARTINGACTIVITY_MAINACTIVITY);
+                    }
                 }else{
                     Log.d("abcdefg","response body null");
                     showProgress(false);
+                    mPasswordView.setText(null);
+                    Toast.makeText(StartingActivity.this,"Email Password pair doesnot match",Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -298,6 +299,9 @@ public class StartingActivity extends AppCompatActivity  {
             public void onFailure(Call<UserLoginResponse> call, Throwable t) {
                 Log.d("abcdefg","inside failure");
                 showProgress(false);
+                mEmailView.setText(null);
+                mPasswordView.setText(null);
+                Toast.makeText(StartingActivity.this,"Getting problem while login please retry",Toast.LENGTH_SHORT).show();
             }
         });
     }

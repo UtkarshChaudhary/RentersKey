@@ -49,10 +49,9 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         Toolbar toolbar=findViewById(R.id.toolbar_cart);
-        recyclerView=findViewById(R.id.recyclerView_cart);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         toolbar.setTitle("Cart");
         toolbar.setTitleTextColor(getColor(R.color.white));
+        setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(getDrawable(R.drawable.arrow_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,9 +59,8 @@ public class CartActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        setSupportActionBar(toolbar);
-
-
+        recyclerView=findViewById(R.id.recyclerView_cart);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_nav_cart);
         bottomNavigationView.setOnNavigationItemSelectedListener(monNavigationItemSelectedListener);
@@ -71,10 +69,16 @@ public class CartActivity extends AppCompatActivity {
         textView.setPadding(0,0,0,32);
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
+
     private void fetchCartDetails(){
         SharedPreferences sharedPreferences=getSharedPreferences(SharedPreferencesConstant.SHAREDPREFERENCE_NAME,MODE_PRIVATE);
         String userId=sharedPreferences.getString(SharedPreferencesConstant.USERID,null);
-       userId="5a3aaa74072eb528b41c5ecc";
+      // userId="5a3aaa74072eb528b41c5ecc";
         if(userId!=null){
             Call<CartDetails>  call= ClientService.createService().getCartOfUser(userId);
             call.enqueue(new Callback<CartDetails>() {
@@ -96,6 +100,12 @@ public class CartActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<CartDetails> call, Throwable t) {
                    // Log.e("abcdef","onResponse"+t.getMessage().toString());
+                    cartAdapter=new CartAdapter();
+                    cartProducts.clear();
+                    if(cartProducts.isEmpty()){
+                        cartProducts.add(new Products("Your Cart do no contain any Product"));
+                    }
+                    recyclerView.setAdapter(cartAdapter);
                 }
             });
         }

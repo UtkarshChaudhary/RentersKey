@@ -25,7 +25,8 @@ public class SearchFilter extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             if(item.getItemId()== R.id.apply_filter){
-
+                setResult(RESULT_OK);
+                finish();
                 return true;
             }
             return false;
@@ -71,6 +72,13 @@ public class SearchFilter extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.searchfilter_menu, menu);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        finish();
+        super.onBackPressed();
     }
 
     @Override

@@ -3,7 +3,10 @@ package com.example.lenovo.renterskey.ExtraClasses;
 import android.content.Context;
 import android.content.Intent;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +44,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position)
     {
-        Glide.with(context).load(productsList.get(position).imageUrl+productsList.get(position).img1).into(holder.productImage);
+         if(productsList.get(position).img2!=null){
+          byte[] imagesBytes= Base64.decode(productsList.get(position).img2,Base64.DEFAULT);
+            Bitmap decodeImage= BitmapFactory.decodeByteArray(imagesBytes,0,imagesBytes.length);
+            holder.productImage.setImageBitmap(decodeImage);
+        }else {
+            Glide.with(context).load(productsList.get(position).imageUrl + productsList.get(position).img1).into(holder.productImage);
+
+        }
         holder.productTitle.setText(productsList.get(position).productName);
         holder.productDescription.setText("Description :"+productsList.get(position).type+productsList.get(position).category);
         holder.productPrice.setText("Price :"+productsList.get(position).price);

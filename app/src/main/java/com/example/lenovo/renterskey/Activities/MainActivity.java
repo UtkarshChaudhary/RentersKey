@@ -1,11 +1,14 @@
 package com.example.lenovo.renterskey.Activities;
 
-import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,14 +18,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.lenovo.renterskey.ExtraClasses.HorizontalScrollViewAdapter;
+import com.example.lenovo.renterskey.ExtraClasses.ProductListAdapter;
 import com.example.lenovo.renterskey.IntentAndSharedPreferences.IntentConstant;
+import com.example.lenovo.renterskey.IntentAndSharedPreferences.SharedPreferencesConstant;
 import com.example.lenovo.renterskey.Networking.ClientService;
 import com.example.lenovo.renterskey.R;
 import com.example.lenovo.renterskey.db.ProductDao;
@@ -32,6 +36,7 @@ import com.example.lenovo.renterskey.vo.Products;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,13 +47,19 @@ public class MainActivity extends AppCompatActivity
    private DrawerLayout drawer;
 //    MaterialSearchView searchView;
     ProductDao productDao;
+    RecyclerView recyclerViewFakeProducts;
+    static List<Products> fakeProductsList;
+    ProductListAdapter productListAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        productDao=RentersKeyDb.getINSTANCE(this).productDao();
-        clearPreviousList();
+        if(productDao==null) {
+            productDao = RentersKeyDb.getINSTANCE(this).productDao();
+            clearPreviousList();
+            fetchProductListForSearching();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if(drawer==null) {
@@ -61,14 +72,51 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        SharedPreferences sharedPreferences=getSharedPreferences(SharedPreferencesConstant.SHAREDPREFERENCE_NAME,MODE_PRIVATE);
+        TextView tv=navigationView.getHeaderView(0).findViewById(R.id.nav_username);
+        if(sharedPreferences.getString(SharedPreferencesConstant.FIRSTNAME,null)!=null) {
+            tv.setText(sharedPreferences.getString(SharedPreferencesConstant.FIRSTNAME,null));
+        }
+        TextView tv1=navigationView.getHeaderView(0).findViewById(R.id.nav_emailId);
+        if(sharedPreferences.getString(SharedPreferencesConstant.EMAIL,null)!=null){
+            tv1.setText(sharedPreferences.getString(SharedPreferencesConstant.EMAIL,null));
+        }
 
         RecyclerView recyclerView=findViewById(R.id.horizontal_recycle_view);
-        HorizontalScrollViewAdapter adapter=new HorizontalScrollViewAdapter(recyclerView.getContext());
+        HorizontalScrollViewAdapter adapter=new HorizontalScrollViewAdapter(recyclerView.getContext(), new HorizontalScrollViewAdapter.OnItemClicked() {
+            @Override
+            public void onClickFunction(View view, int pos) {
+                Intent i=new Intent(MainActivity.this,ShowProducts.class);
+                i.putExtra(IntentConstant.CATEGORY,"electronics");
+                startActivityForResult(i,IntentConstant.MAINACTIVITY_SHOWPRODUCTS);
+
+            }
+        });
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        fetchProductListForSearching();
+
+        recyclerViewFakeProducts=findViewById(R.id.rec_view_main_acti_products);
+        recyclerViewFakeProducts.setLayoutManager(new LinearLayoutManager(this));
+        if(fakeProductsList==null||fakeProductsList.isEmpty()) {
+            fakeProductsList = getFakeProductsList();
+        }
+        productListAdapter=new ProductListAdapter(fakeProductsList, this, new ProductListAdapter.ParticularProductClicked() {
+            @Override
+            public void onProductClicked(View view, int pos) {
+
+            }
+        });
+        recyclerViewFakeProducts.setAdapter(productListAdapter);
+        FloatingActionButton fab=findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(MainActivity.this,PostAdd.class);
+                startActivityForResult(i,IntentConstant.MAINACTIVITY_POSTADD);
+            }
+        });
         //search_bar
 
 //        searchView=(MaterialSearchView)findViewById(R.id.search_bar_main_activity);
@@ -132,7 +180,7 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()){
             case R.id.action_search :{
                 Intent i=new Intent(this,SearchEngineActivity.class);
-                startActivityForResult(i, IntentConstant.REQUEST_CODE_MAIN_ACTIVITY_SEARCH_ENGINE);
+                startActivityForResult(i, IntentConstant.MAIN_ACTIVITY_SEARCH_ENGINE);
                 return true;
             }
 
@@ -141,7 +189,8 @@ public class MainActivity extends AppCompatActivity
                 return true;
             }
             case R.id.cart_icon :{
-
+                Intent i=new Intent(this,CartActivity.class);
+                startActivityForResult(i,IntentConstant.MAINACTIVITY_CARTACTIVITY);
                 return true;
             }
             default: return false;
@@ -149,65 +198,79 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    @SuppressLint("RestrictedApi")
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle postadd_bottomnavigation view item clicks here.
        switch (item.getItemId()){
             case R.id.nav_mobiles :{
-
+                Intent i=new Intent(this,ShowProducts.class);
+                i.putExtra(IntentConstant.CATEGORY,"electronics");
+                startActivityForResult(i,IntentConstant.MAINACTIVITY_SHOWPRODUCTS);
+                return true;
             }
-            break;
 
             case R.id.nav_tv:{
-
+                Intent i=new Intent(this,ShowProducts.class);
+                i.putExtra(IntentConstant.CATEGORY,"electronics");
+                startActivityForResult(i,IntentConstant.MAINACTIVITY_SHOWPRODUCTS);
+                return true;
             }
-            break;
 
             case R.id.nav_laptop :{
-
+                Intent i=new Intent(this,ShowProducts.class);
+                i.putExtra(IntentConstant.CATEGORY,"electronics");
+                startActivityForResult(i,IntentConstant.MAINACTIVITY_SHOWPRODUCTS);
+                return true;
             }
-            break;
 
             case R.id.nav_appliances:{
-
+                Intent i=new Intent(this,ShowProducts.class);
+                i.putExtra(IntentConstant.CATEGORY,"electronics");
+                startActivityForResult(i,IntentConstant.MAINACTIVITY_SHOWPRODUCTS);
+                return true;
             }
-            break;
+
 
             case R.id.nav_furniture:{
-
+                Intent i=new Intent(this,ShowProducts.class);
+                i.putExtra(IntentConstant.CATEGORY,"electronics");
+                startActivityForResult(i,IntentConstant.MAINACTIVITY_SHOWPRODUCTS);
+                return true;
             }
-            break;
 
             case R.id.nav_fashion:{
-
+                Intent i=new Intent(this,ShowProducts.class);
+                i.putExtra(IntentConstant.CATEGORY,"electronics");
+                startActivityForResult(i,IntentConstant.MAINACTIVITY_SHOWPRODUCTS);
+                return true;
             }
-            break;
 
             case R.id.nav_more:{
-
+                Intent i=new Intent(this,ShowProducts.class);
+                i.putExtra(IntentConstant.CATEGORY,"electronics");
+                startActivityForResult(i,IntentConstant.MAINACTIVITY_SHOWPRODUCTS);
+                return true;
             }
-            break;
 
             case R.id.nav_cart:{
-
+                Intent i=new Intent(this,CartActivity.class);
+                startActivityForResult(i,IntentConstant.MAINACTIVITY_CARTACTIVITY);
+                return true;
             }
-            break;
 
-            case R.id.nav_order:{
-
-            }
-            break;
-
-            case R.id.nav_products:{
-
-            }
-            break;
 
             case R.id.nav_setting:{
-
+                     return true;
             }
-            break;
+           case R.id.nav_logout :{
+                SharedPreferences sharedPreferences=getSharedPreferences(SharedPreferencesConstant.SHAREDPREFERENCE_NAME,MODE_PRIVATE);
+                sharedPreferences.edit().clear().commit();
+                Intent i=new Intent(this,StartingActivity.class);
+               startActivity(i);
+            }
+
         }
 
         if(drawer==null) {
@@ -254,4 +317,42 @@ public class MainActivity extends AppCompatActivity
           }
       }.execute();
   }
+
+
+  private List<Products> getFakeProductsList(){
+      List<Products> productsList=new ArrayList<>();
+      Resources resources=this.getResources();
+      String[] type=resources.getStringArray(R.array.products_type);
+      TypedArray array=resources.obtainTypedArray(R.array.products_images);
+      Drawable[] picture=new Drawable[array.length()];
+      for(int i=0;i<type.length;i++){
+          picture[i]=array.getDrawable(i);
+      }
+      array.recycle();
+      String[] price=new String[type.length];
+      String[] rent=new String[type.length];
+      for(int i=0;i<price.length;i++){
+          Random rd=new Random();
+          int p=rd.nextInt(10000);
+          if(p<1000){
+              p+=1000;
+          }
+          int r=rd.nextInt(1000);
+          if(r<100){
+              r+=100;
+          }
+          price[i]=""+p;
+          rent[i]=""+r;
+      }
+      for(int i=0;i<type.length;i++){
+          Products products=new Products("",price[i],type[i],rent[i],type[i],picture[i],type[i]);
+          productsList.add(products);
+      }
+      return productsList;
+  }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

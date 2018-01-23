@@ -17,12 +17,13 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Hello"
+        android:id="@+id/nav_username"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
-        android:id="@+id/nav_textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/nav_emailId"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welocome Guest" />
+        android:text="Welcome Guest" />
 
 </LinearLayout>
